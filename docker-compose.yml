@@ -1,0 +1,59 @@
+version: "3"
+services:
+    PostgreSQL:
+      image: postgres
+      restart: always
+      environment:
+        POSTGRES_USER: admin
+        POSTGRES_PASSWORD: admin
+        POSTGRES_DB: postgres
+      container_name: postgres
+      ports:
+        - '5432:5432'
+      networks:
+        - internal
+
+    frontend:
+        container_name: front
+        build:
+            context: ./front
+            dockerfile: Dockerfile
+        image: front
+        ports:
+            - "3000:3000"
+        volumes:
+            - ./front:/app
+        networks:
+          - internal
+        
+    backend:
+        depends_on:
+          - PostgreSQL
+        container_name: back
+        build:
+            context: ./back
+            dockerfile: Dockerfile
+        image: back
+        ports:
+            - "4000:4000"
+        volumes:
+            - ./back:/app
+        networks: 
+          - internal
+        restart: always
+        init: true
+
+    adminer:
+      depends_on:
+        - PostgreSQL
+      image: adminer
+      restart: always
+      ports:
+        - 8080:8080
+      networks:
+       - internal
+
+networks:
+  internal:
+    driver: bridge
+    # external: false
