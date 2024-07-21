@@ -10,6 +10,9 @@ import { GameService } from './game/game.service';
 import { GameModule } from './game/game.module';
 import { Question } from './question/question.entity';
 import { Game } from './game/game.entity';
+import { Theme } from './question/theme/theme.entity';
+import { Type } from './question/type.entity';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -20,12 +23,12 @@ import { Game } from './game/game.entity';
       username: 'admin',
       password: 'admin',
       database: 'postgres',
-      entities: [User, Question, Game],
+      entities: [User, Question, Game, Theme, Type],
       synchronize: true,
     }),
     UsersModule,
     QuestionModule,
-    GameModule
+    GameModule,
   ],
   controllers: [AppController],
   providers: [AppService],

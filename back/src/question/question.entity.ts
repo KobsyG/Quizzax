@@ -1,14 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Theme } from './theme/theme.entity';
+import { Type } from './type.entity';
+import { IsOptional } from '@nestjs/class-validator';
 
-export enum Theme {
-    Geo = "Géographie",
-    Histoire = "Histoire"
-}
 
-export enum Type {
-    QCM = "QCM",
-    VouF = "Vrai ou Faux",
-}
 
 @Entity()
 export class Question {
@@ -18,9 +13,18 @@ export class Question {
   @Column()
   question: string;
 
-  @Column({type: 'enum', enum: Theme, default: null})
+  @Column()
+  reponse: string;
+
+  // @IsOptional()
+  @ManyToOne(() => Theme)
   theme: Theme;
 
+  @IsOptional()
+  @ManyToOne(() => Type, type => type.type)
+  type: Type;
+
+  @IsOptional()
   @Column()
   point: number;
 

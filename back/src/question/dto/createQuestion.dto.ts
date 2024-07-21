@@ -1,9 +1,10 @@
-import { Theme } from "../question.entity";
 
 export class CreateQuestionDto {
     question: string;
 
-    theme: Theme;
+    reponse: string;
+
+    theme: string;
 
     point: number;
 }

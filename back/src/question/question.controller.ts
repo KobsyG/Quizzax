@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
-import { Question, Theme } from './question.entity';
+import { Body, Controller, Delete, Get, Post } from '@nestjs/common';
+import { Question } from './question.entity';
 import { QuestionService } from './question.service';
 import { CreateQuestionDto } from './dto/createQuestion.dto';
 import { plainToClass } from '@nestjs/class-transformer';
+import { Theme } from './theme/theme.entity';
 
 @Controller('question')
 export class QuestionController {
@@ -12,7 +13,14 @@ export class QuestionController {
 
     @Post()
     async create(@Body() createQuestionDto: CreateQuestionDto): Promise<Question> {
-        return await plainToClass(Question, this.questionService.create(createQuestionDto));
+        return await this.questionService.create(createQuestionDto);
+    }
+
+
+    // Remove a question
+    @Delete()
+    async delete(@Body('id') id: number) {
+        return await this.questionService.remove(id);
     }
 
     // Get all questions
@@ -26,5 +34,7 @@ export class QuestionController {
     async findByTheme(theme: Theme) : Promise<Question[]> {
         return await this.questionService.findByTheme(theme);
     }
+
+    
 
 }

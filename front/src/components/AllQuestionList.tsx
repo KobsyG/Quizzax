@@ -29,7 +29,7 @@ const AllQuestionList = () => {
     <>
       <div>AllQuestionList</div>
       <ul>
-        {listQuestions.map(data => <Question question={data.question} theme={data.theme} point={data.point} />) }
+        {listQuestions.map(data => <Question id={data.id} question={data.question} theme={data.theme?.theme} point={data.point} color={data.theme?.color} />) }
       </ul>
     </>
   )

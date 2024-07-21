@@ -1,6 +1,8 @@
+import { ITheme } from "./Theme";
+
 export interface IQuestion {
     id: number;
     question: string;
-    theme: string | null;
+    theme: ITheme;
     point: number;
   }
